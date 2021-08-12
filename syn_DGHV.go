@@ -5,6 +5,8 @@ import (
 	"math"
 	"math/big"
 	"math/rand"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -15,11 +17,14 @@ var (
 )
 
 func main()  {
-	//eta = rand.Intn(9)		//	为了防止q的溢出，q是64位则η<=4,q是256位则η<=6 (η^3 < 位数)
-	eta = 9						// >= 9 稳定
+	if len(os.Args) <= 1 {
+		panic("Please input parameters η")
+	}
+	//	为了防止q的溢出，q是64位则η<=4,q是256位则η<=6 (η^3 < 位数)
+	eta, _ = strconv.Atoi(os.Args[1]) 		//  测试得出： η >= 9 加法、乘法计算稳定
 	fmt.Println("η = ", eta)
 	fmt.Printf("p range is [%d, %d)\n", int(math.Pow(float64(2), float64(eta-1))), int(math.Pow(float64(2), float64(eta))))
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 100; i++ {
 		rand.Seed(time.Now().UnixNano() + int64(i))
 		// 生成密钥
 		fmt.Println("p = ", genKey_p())
@@ -72,7 +77,7 @@ func genPara_r() int64 {
 		rand.Seed(time.Now().UnixNano())
 		randr = goal - r + 2 * rand.Intn(r)
 	}
-	fmt.Println("r = ", randr)
+	//fmt.Println("r = ", randr)
 	return int64(randr)
 }
 
