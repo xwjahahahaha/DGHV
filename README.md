@@ -43,7 +43,7 @@ Solidity通常采用keccak256哈希函数 作为随机数的生成器，该函�
 
 # 功能测试
 
-合约实现了输入为单Bit（即<img src="http://xwjpics.gumptlu.work/qinniu_uPic/image-20210812231541903.png" alt="image-20210812231541903" style="zoom:50%;" />）的**加法同态加密**（使用对称秘钥)
+合约实现了输入为单Bit（即m ∈ {0, 1}）的**加法同态加密**（使用对称秘钥)
 
 ### step_1 选择参数
 
