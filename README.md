@@ -36,42 +36,16 @@ Solidity通常采用keccak256哈希函数 作为随机数的生成器，该函�
 使用线性求余法生成随机数，再采用keccak256 Hash函数将区块时间戳与随机数合并取最终的随机数
 
 生成公式如下：
-$$
-\begin{cases} X_{n+1} = (aX_n+c)\  mod\  m, \ n \geq 0 \\ R_{n+1} = keccak256(x_{n+1} \ + \ Block\_TimeStamp) \ mod \ k \end{cases}\begin{cases} X_{n+1} = (aX_n+c)\  mod\  m, \ n \geq 0 \\ R_{n+1} = keccak256(x_{n+1} \ + \ Block\_TimeStamp) \ mod \ k \end{cases}
-$$
+
+![HUTVJl](http://xwjpics.gumptlu.work/qinniu_uPic/HUTVJl.png)
 
 ## 2. 整数上的全同态加密
 
-定义一套**对称加密**方法：
-
-$keyGen(\lambda)$根据安全参数$\lambda$生成一个**大奇数$p$**密钥, $\eta$（bit）是生成密钥$p$的位数
-
-$Encrypto(pk, m)$​表示加密,其中$pk$​表示公钥, m是明文，根据Dijk中的规定$m \in \{0,1\}$​也即明文m只有一位;
-
- $r, q$​都是正随机数, 长度分别为$\rho、 \gamma$​​ , 其中的要求是$q>p$​ 且 $q$是公开的 , $r$​是一个随机小整数（可为负数）
-
-则加密过程为:
-$$
-Encrypto(pk, m) = m + 2r + pq
-$$
-对应的解密过程$Decrypto(sk, c)$, 其中$sk$表示私钥、$c$表示密文:
-$$
-Decrypto(sk, c) = (c \ mod  \ p) \ mod \ 2 = （c - p* \ulcorner\dfrac{c}{p}\lrcorner）mod \ 2 = Lsb(c) \ XOR \ Lsb(\ulcorner\dfrac{c}{p}\lrcorner)
-$$
-
-这里是对称加密，所以公钥和私钥是相同的，即$pk =sk = p$
-
-**正确性的验证：**
-
-对于解密算法显然可以看出$mod \ p$​将$pq$项消除，$mod2$将随机数$r$项消除，最后的结果就是$m$
-
-**安全性讨论：**
-
-论文中已说明当参数$r \approx 2 ^{\sqrt{\eta}} , q \approx 2^{\eta^3}$​时，该方案是安全的
+![iPUQRe](http://xwjpics.gumptlu.work/qinniu_uPic/iPUQRe.png)
 
 # 功能测试
 
-合约实现了输入为单Bit（即$m \in \{0, 1\}$​）的**加法同态加密**（使用对称秘钥）
+合约实现了输入为单Bit（即m ∈ {0, 1}）的**加法同态加密**（使用对称秘钥）
 
 ## step_1 选择参数
 
@@ -161,3 +135,4 @@ m0 = 0, m1 = 1
 3. 设计电路时注意使用Bootstappable算法减少噪声，不然会失效
 
 欢迎Start，后续继续更新
+
